@@ -328,6 +328,12 @@ Texto 3
 3. input 1
 
 
+
+  ![This is an image](https://github.com/RafaelReisyzx/Document-Ranking/blob/main/img/img1.png)
+
+
+
+
 # Funções
 
 ### `Node* create_node(const char *word)`
