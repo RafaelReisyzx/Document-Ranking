@@ -776,8 +776,18 @@ O sistema também aloca memória para os arrays que armazenam as listas de docum
 
 Portanto, o uso total de memória do sistema pode ser estimado em O(p + n), onde p representa o total de palavras únicas processadas e n o número de documentos.
 
-# Conclusão
-O desempenho do sistema é amplamente dependente do número de documentos, da complexidade dos textos e do número de palavras a serem processadas. A análise do tempo de execução, custo computacional, análise assintótica e uso de memória fornece uma base sólida para entender a eficiência e a escalabilidade do programa. Para otimizações futuras, considerar a implementação de algoritmos de classificação mais eficientes ou estruturas de dados que reduzem a complexidade do tempo e do uso de memória pode ser uma abordagem viável.
+## Tempo Execução
+
+Ao testar esses 6 documentos: 
+        "dataset/A mão e a luva.txt",
+        "dataset/biblia.txt",
+        "dataset/DomCasmurro.txt",
+        "dataset/quincas borba.txt",
+        "dataset/Semana_Machado_Assis.txt",
+        "dataset/terremoto.txt"
+
+Com um input aleatório de 50 frases de pesquisa o tempo total de execução foi de: 67.630799 segundos, podemos observar que 
+o desempenho do sistema é amplamente dependente do número de documentos, da complexidade dos textos e do número de palavras a serem processadas.
 
 # Compilação e Execução
 
