@@ -24,6 +24,58 @@ Embora as listas encadeadas sejam uma escolha adequada para este projeto, altern
 
 A escolha de listas encadeadas equilibra eficiência, simplicidade e flexibilidade, adequando-se bem às necessidades do projeto.
 
+# Funcionamento
+
+### 1. Inicialização
+- O programa começa com a inclusão de um cabeçalho que contém definições e declarações de funções, bem como a definição de uma estrutura de dados (neste caso, uma lista ligada) para armazenar palavras e suas frequências.
+- Em seguida, são definidas variáveis para armazenar o tempo de execução e uma matriz para armazenar listas de palavras de documentos, todas inicializadas como NULL.
+
+### 2. Definição de Documentos
+- Uma lista de nomes de arquivos de texto é definida. Esses arquivos contêm os documentos que serão processados. No caso, são seis documentos de literatura.
+  
+```
+   const char *files[] = {
+        "dataset/A mão e a luva.txt",
+        "dataset/biblia.txt",
+        "dataset/DomCasmurro.txt",
+        "dataset/quincas borba.txt",
+        "dataset/Semana_Machado_Assis.txt",
+        "dataset/terremoto.txt"
+    };
+```
+
+### 3. Carregamento de Documentos
+- O programa chama uma função responsável por carregar e processar os documentos de texto. Essa função:
+  - Lê os termos de cada arquivo e normaliza-os.
+  - Insere os termos em uma lista encadeada para cada documento, ignorando os termos que estão na lista de stopwords (palavras comuns que não agregam significado, como "e", "o", etc.).
+  - A estrutura de cada nó na lista contém o termo, sua frequência e a contagem de documentos em que aparece.
+
+### 4. Carregamento de Arquivo de Entrada
+- Outra função é chamada para ler um arquivo de entrada, que contém frases de pesquisa que são separadas por linha.
+- Cada linha é processada da mesma forma que os documentos, resultando em uma lista de palavras para cada linha a serem analisadas.
+
+### 5. Cálculo de Frequências e TF-IDF
+- Para cada linha do arquivo de entrada, são realizadas as seguintes operações:
+  - Inicializa um vetor para armazenar os scores TF-IDF para cada documento.
+  - Para cada documento, atualiza a frequência das palavras da linha atual na lista de palavras do documento.
+  - Calcula os scores TF-IDF:
+  - O Term Frequency (TF) é calculado como a frequência da palavra na lista de entrada em relação à frequência total no documento.
+  - O Inverse Document Frequency (IDF) é calculado com base na contagem de documentos.
+  - O score TF-IDF é armazenado em um vetor, representando a importância da palavra para cada documento.
+
+### 6. Classificação dos Documentos
+- Após calcular os scores TF-IDF, os documentos são classificados com base nesses scores.
+- O resultado é uma lista que ordena os documentos do mais relevante para o menos relevante.
+
+### 7. Impressão dos Resultados
+- O programa imprime o ranking dos documentos para cada linha do arquivo de entrada, mostrando quais documentos são mais relevantes para a consulta.
+
+### 8. Liberação de Memória
+- Após processar todas as linhas do arquivo de entrada, o código libera a memória alocada para as listas de documentos e as listas de entrada.
+
+### 9. Cálculo do Tempo de Execução
+- Finalmente, o tempo total de execução é calculado e impresso, oferecendo uma métrica de desempenho do programa.
+
 # Exemplo Simples de funcionamento
 
 Entradas que serão utilizadas no exemplo:
