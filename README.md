@@ -1,5 +1,3 @@
-# Sistema de Ranqueamento de Documentos com TF/IDF
-
 # Descrição do Algoritmo
 
 Este sistema tem como objetivo ranquear documentos de texto com base na relevância em relação a frases de pesquisa, utilizando o algoritmo TF/IDF (Term Frequency-Inverse Document Frequency). A ideia principal é medir a importância de cada termo em um conjunto de documentos, considerando tanto a frequência dos termos dentro dos documentos (TF) quanto a importância geral dos termos no conjunto de documentos (IDF). O sistema lê um conjunto de documentos, normaliza as palavras (removendo stopwords e pontuações) e calcula os scores TF/IDF para cada frase de pesquisa, resultando em um ranqueamento dos documentos.
@@ -26,47 +24,256 @@ Embora as listas encadeadas sejam uma escolha adequada para este projeto, altern
 
 A escolha de listas encadeadas equilibra eficiência, simplicidade e flexibilidade, adequando-se bem às necessidades do projeto.
 
-# Custo Computacional
+# Exemplo Simples de funcionamento
 
-O custo computacional do sistema é determinado pelas operações realizadas nas listas encadeadas e na manipulação das frequências de palavras. O custo é analisado em termos de:
+Entradas que serão utilizadas no exemplo:
 
-### Carga de Documentos
-A função `load_documents` itera por todos os documentos, processando cada um deles. O custo computacional desta função é O(n ⋅ m), onde n é o número de documentos e m é o número médio de palavras por documento.
+Texto 1: 
+> A luz do sol passa pelas folhas da árvore.
+As sombras dançavam no chão enquanto o vento sussurrava segredos.
+Um pássaro pousou, trazendo consigo uma mensagem de liberdade.
 
-### Atualização de Frequências
-A função `update_frequency` percorre cada palavra da lista de entrada para atualizar suas frequências nos documentos. O custo aqui é O(p ⋅ q), onde p é o número de palavras na entrada e q é o número de documentos.
+Texto 2: 
+> No fundo do mar, criaturas misteriosas aguardavam a próxima presa.
+As ondas quebravam suavemente, ocultando um mundo de segredos.
+Uma luz tênue brilhava, revelando um símbolo desconhecido.
 
-### Cálculo do TF-IDF
-A função `calculate_tfidf` calcula a pontuação TF-IDF para cada palavra. O custo é O(p ⋅ n), onde p é o número de palavras na lista de entrada e n é o número de documentos.
+Texto 3: 
+> Em uma cidade esquecida, as ruas contavam histórias de tempos antigos.
+As paredes grafitadas vibravam com a energia da juventude rebelde.
+A música pode ecoar, unindo almas em busca de significado.
 
-### Classificação de Documentos
-A função `rank_documents` possui um custo de O(n²) para classificar os documentos com base nas pontuações TF-IDF.
+Input
+Input:
+> Mistérios do fundo do mar esperam por quem se atreve a explorar.
+Um pássaro pode ser visto como um símbolo de liberdade e esperança.
+O vento sussurra segredos que só quem tem mais energia consegue ouvir.
 
-Assim, o custo total do programa pode ser expresso como: O(n ⋅ m) + O(p ⋅ q) + O(p ⋅ n) + O(n²)
+### Etapa 1: Normalização das Palavras
 
-## Análise Assintótica
-A análise assintótica do sistema pode ser resumida nas seguintes complexidades:
+Primeiramente, cada termo dos textos e do input são normalizados. Isso envolve transformar todas as palavras para letras minúsculas, remover caracteres especiais de pontuação e filtrar palavras que são consideradas *stopwords* (palavras comuns que não agregam valor ao significado, como "o", "a", "e", etc.).
 
-- Carga de Documentos: O(n ⋅ m)
-- Atualização de Frequências: O(p ⋅ q)
-- Cálculo do TF-IDF: O(p ⋅ n)
-- Classificação de Documentos: O(n²)
+Texto 1:
+> luz sol passa pelas folhas árvore
+sombras dançavam chão vento sussurrava segredos
+pássaro pousou trazendo consigo mensagem liberdade
 
-A complexidade geral do sistema depende da operação mais custosa, que é a classificação de documentos, resultando em uma complexidade assintótica de O(n²).
+Texto 2:
+> fundo mar criaturas misteriosas aguardavam próxima presa
+ondas quebravam suavemente ocultando mundo segredos
+luz tênue brilhava revelando símbolo desconhecido
 
-## Uso de Memória
-O uso de memória é uma consideração importante, especialmente em sistemas que manipulam grandes volumes de dados. A memória utilizada pelo sistema é principalmente relacionada ao armazenamento das listas encadeadas e às variáveis auxiliares:
+Texto 3:
+> cidade esquecida ruas contavam histórias tempos antigos
+paredes grafitadas vibravam energia juventude rebelde
+música pode ecoar unindo almas busca significado
 
-## Listas Encadeadas
-Cada lista de palavras utiliza memória para armazenar os nós, onde cada nó armazena uma palavra, sua frequência e as frequências de documentos. O espaço utilizado por cada nó é O(1), e, portanto, a memória total para a lista de entrada pode ser O(p), onde p é o número total de palavras processadas.
+Input:
+> mistérios fundo mar esperam atreve explorar
+pássaro pode ser visto símbolo liberdade esperança
+vento sussurra segredos energia consegue ouvir
 
-## Array de Documentos
-O sistema também aloca memória para os arrays que armazenam as listas de documentos e os scores TF-IDF. A memória total para documentos é O(n), onde n é o número de documentos.
+### Etapa 2: Adição das palavras em listas 
 
-Portanto, o uso total de memória do sistema pode ser estimado em O(p + n), onde p representa o total de palavras únicas processadas e n o número de documentos.
+Lista Texto 1:
+- luz 
+- sol 
+- passa 
+- pelas 
+- folhas 
+- árvore
+- sombras
+- dançavam 
+- chão 
+- vento 
+- sussurrava 
+- segredos
+- pássaro
+- pousou 
+- trazendo 
+- consigo 
+- mensagem 
+- liberdade
 
-# Conclusão
-O desempenho do sistema é amplamente dependente do número de documentos, da complexidade dos textos e do número de palavras a serem processadas. A análise do tempo de execução, custo computacional, análise assintótica e uso de memória fornece uma base sólida para entender a eficiência e a escalabilidade do programa. Para otimizações futuras, considerar a implementação de algoritmos de classificação mais eficientes ou estruturas de dados que reduzem a complexidade do tempo e do uso de memória pode ser uma abordagem viável.
+Lista Texto 2:
+- fundo 
+- mar 
+- criaturas 
+- misteriosas 
+- aguardavam
+- próxima 
+- presa
+- ondas 
+- quebravam 
+- suavemente 
+- ocultando 
+- mundo 
+- segredos
+- luz 
+- tênue 
+- brilhava 
+- revelando 
+- símbolo 
+- desconhecido
+
+Lista Texto 3:
+- cidade 
+- esquecida 
+- ruas 
+- contavam 
+- histórias 
+- tempos 
+- antigos
+- paredes 
+- grafitadas 
+- vibravam 
+- energia 
+- juventude 
+- rebelde
+- música
+- pode
+- ecoar 
+- unindo 
+- almas 
+- busca 
+- significado
+
+Diferente dos documentos que possuem uma lista para cada texto, no input são criadas listas para cada frase do texto
+
+Lista 1 Input:
+- mistérios
+- fundo
+- mar
+- esperam
+- atreve
+- explorar
+  
+Lista 2 Input:
+- pássaro
+- pode
+- ser
+- visto
+- símbolo
+- liberdade
+- esperança
+  
+Lista 3 Input:
+- vento
+- sussurra
+- segredos
+- energia
+- consegue
+- ouvir
+
+### Etapa 3: Identificar frequências
+
+Nesta etapa, comparamos as palavras do input com as palavras dos textos, utilizando as frequências calculadas. O objetivo é identificar quais palavras do input estão presentes nos textos e quantas vezes aparecem.
+| Lista Input 1 | frequência texto 1 | frequência texto 2 | frequência texto 3 | 
+|---------------|--------------------|--------------------|--------------------| 
+| mistérios     | 0                  | 0                  | 0                  |
+| fundo         | 0                  | 1                  | 0                  |
+| mar           | 0                  | 1                  | 0                  |
+| esperam       | 0                  | 0                  | 0                  |
+| atreve        | 0                  | 0                  | 0                  |
+| explorar      | 0                  | 0                  | 0                  |
+
+| Lista Input 2 | frequência texto 1 | frequência texto 2 | frequência texto 3 | 
+|---------------|--------------------|--------------------|--------------------| 
+| pássaro       | 1                  | 0                  | 0                  |
+| pode          | 0                  | 0                  | 1                  |
+| ser           | 0                  | 0                  | 0                  |
+| visto         | 0                  | 0                  | 0                  |
+| símbolo       | 1                  | 0                  | 0                  |
+| liberdade     | 1                  | 0                  | 0                  |
+| esperança     | 0                  | 0                  | 0                  |
+
+| Lista Input 3 | frequência texto 1 | frequência texto 2 | frequência texto 3 | 
+|---------------|--------------------|--------------------|--------------------| 
+| vento         | 1                  | 0                  | 0                  |
+| sussurra      | 0                  | 0                  | 0                  |
+| segredos      | 1                  | 1                  | 0                  |
+| energia       | 0                  | 0                  | 1                  |
+| consegue      | 0                  | 0                  | 0                  |
+| ouvir         | 0                  | 0                  | 0                  |
+
+
+### Etapa 4: Cálculo TF-IDF
+
+A frequência do termo (TF) é calculada como:
+$\text{TF}(t) = \frac{\text{Frequência}(t)}{\text{Total de palavras no documento}}$
+onde:
+- (Frequência(t))  é o número de vezes que o termo aparece no documento.
+- (Total de palavras no documento) é o número total de palavras presentes no documento, no exemplo: Texto 1:18,Texto 2:19 e Texto 3:19
+
+A frequência inversa do documento (IDF) é calculada como:
+
+$\text{IDF}(t) = \log\left(\frac{N}{n_t}\right)$
+onde:
+-  (N)  é o total de documentos, no exemplo:3.
+- $\( n_t \)$ é o número de documentos que contêm o termo.
+
+
+| Lista Input 1 | frequência texto 1 | frequência texto 2 | frequência texto 3 | TF Texto 1 | TF Texto 2 | TF Texto 3 | IDF            | 
+|---------------|--------------------|--------------------|--------------------|------------|------------|------------|----------------|
+| mistérios     | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| fundo         | 0                  | 1                  | 0                  | 0/18=0     | 1/19=0,052 | 0/19=0     | log(3/1)=0,477 |
+| mar           | 0                  | 1                  | 0                  | 0/18=0     | 1/19=0,052 | 0/19=0     | log(3/1)=0,477 |
+| esperam       | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| atreve        | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| explorar      | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| total         | 0                  | 2                  | 0                  | 0/18=0     | 0,105      | 0          | 0,954          |
+
+| Lista Input 2 | frequência texto 1 | frequência texto 2 | frequência texto 3 | TF Texto 1 | TF Texto 2 | TF Texto 3 | IDF            | 
+|---------------|--------------------|--------------------|--------------------|------------|------------|------------|----------------|
+| pássaro       | 1                  | 0                  | 0                  | 1/18=0,055 | 0/19=0     | 0/19=0     | log(3/1)=0,477 |
+| pode          | 0                  | 0                  | 1                  | 0/18=0     | 0/19=0     | 1/19=0,052 | log(3/1)=0,477 |
+| ser           | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| visto         | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| símbolo       | 1                  | 0                  | 0                  | 1/18=0,055 | 0/19=0     | 0/19=0     | log(3/1)=0,477 |
+| liberdade     | 1                  | 0                  | 0                  | 1/18=0,055 | 0/19=0     | 0/19=0     | log(3/1)=0,477 |
+| esperança     | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| total         | 3                  | 0                  | 1                  | 0,166      | 0          | 0,052      | 1,908          |
+
+| Lista Input 3 | frequência texto 1 | frequência texto 2 | frequência texto 3 | TF Texto 1 | TF Texto 2 | TF Texto 3 | IDF            | 
+|---------------|--------------------|--------------------|--------------------|------------|------------|------------|----------------|
+| vento         | 1                  | 0                  | 0                  | 1/18=0,055 | 0/19=0     | 0/19=0     | log(3/1)=0,477 |
+| sussurra      | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| segredos      | 1                  | 1                  | 0                  | 1/18=0,055 | 1/19=0,052 | 0/19=0     | log(3/2)=0,176 |
+| energia       | 0                  | 0                  | 1                  | 0/18=0     | 0/19=0     | 1/19=0,052 | log(3/1)=0,477 |
+| consegue      | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| ouvir         | 0                  | 0                  | 0                  | 0/18=0     | 0/19=0     | 0/19=0     | log(3/0)=Null  |
+| total         | 2                  | 1                  | 1                  | 0,105      | 0,052      | 0,052      | 1,607          |
+
+### Etapa 5: Raking de Documentos
+
++ Relevância TF-IDF do input 1 no texto 1:0
++ Relevância TF-IDF do input 1 no texto 2:0,10017
++ Relevância TF-IDF do input 1 no texto 3:0
+
++ Relevância TF-IDF do input 2 no texto 1:0,316728
++ Relevância TF-IDF do input 2 no texto 2:0
++ Relevância TF-IDF do input 2 no texto 3:0,099216
+
++ Relevância TF-IDF do input 3 no texto 1:0,168735
++ Relevância TF-IDF do input 3 no texto 2:0,083564
++ Relevância TF-IDF do input 3 no texto 3:0,083564
+
+Agora para finalizar é criado um raking dos inputs de acordo com seus scores
+
+Texto 1
+1. input 2
+2. input 3
+3. input 1
+
+Texto 2
+1. input 1
+2. input 3
+3. input 2
+
+Texto 3
+1. input 2
+2. input 3
+3. input 1
 
 
 # Funções
@@ -472,6 +679,47 @@ void free_memory(Node *lists[], size_t count) {
 #### Explicação:
 1. Itera sobre o array de listas e chama `free_list` para cada uma delas.
 
+# Custo Computacional
+
+O custo computacional do sistema é determinado pelas operações realizadas nas listas encadeadas e na manipulação das frequências de palavras. O custo é analisado em termos de:
+
+### Carga de Documentos
+A função `load_documents` itera por todos os documentos, processando cada um deles. O custo computacional desta função é O(n ⋅ m), onde n é o número de documentos e m é o número médio de palavras por documento.
+
+### Atualização de Frequências
+A função `update_frequency` percorre cada palavra da lista de entrada para atualizar suas frequências nos documentos. O custo aqui é O(p ⋅ q), onde p é o número de palavras na entrada e q é o número de documentos.
+
+### Cálculo do TF-IDF
+A função `calculate_tfidf` calcula a pontuação TF-IDF para cada palavra. O custo é O(p ⋅ n), onde p é o número de palavras na lista de entrada e n é o número de documentos.
+
+### Classificação de Documentos
+A função `rank_documents` possui um custo de O(n²) para classificar os documentos com base nas pontuações TF-IDF.
+
+Assim, o custo total do programa pode ser expresso como: O(n ⋅ m) + O(p ⋅ q) + O(p ⋅ n) + O(n²)
+
+## Análise Assintótica
+A análise assintótica do sistema pode ser resumida nas seguintes complexidades:
+
+- Carga de Documentos: O(n ⋅ m)
+- Atualização de Frequências: O(p ⋅ q)
+- Cálculo do TF-IDF: O(p ⋅ n)
+- Classificação de Documentos: O(n²)
+
+A complexidade geral do sistema depende da operação mais custosa, que é a classificação de documentos, resultando em uma complexidade assintótica de O(n²).
+
+## Uso de Memória
+O uso de memória é uma consideração importante, especialmente em sistemas que manipulam grandes volumes de dados. A memória utilizada pelo sistema é principalmente relacionada ao armazenamento das listas encadeadas e às variáveis auxiliares:
+
+## Listas Encadeadas
+Cada lista de palavras utiliza memória para armazenar os nós, onde cada nó armazena uma palavra, sua frequência e as frequências de documentos. O espaço utilizado por cada nó é O(1), e, portanto, a memória total para a lista de entrada pode ser O(p), onde p é o número total de palavras processadas.
+
+## Array de Documentos
+O sistema também aloca memória para os arrays que armazenam as listas de documentos e os scores TF-IDF. A memória total para documentos é O(n), onde n é o número de documentos.
+
+Portanto, o uso total de memória do sistema pode ser estimado em O(p + n), onde p representa o total de palavras únicas processadas e n o número de documentos.
+
+# Conclusão
+O desempenho do sistema é amplamente dependente do número de documentos, da complexidade dos textos e do número de palavras a serem processadas. A análise do tempo de execução, custo computacional, análise assintótica e uso de memória fornece uma base sólida para entender a eficiência e a escalabilidade do programa. Para otimizações futuras, considerar a implementação de algoritmos de classificação mais eficientes ou estruturas de dados que reduzem a complexidade do tempo e do uso de memória pode ser uma abordagem viável.
 
 # Compilação e Execução
 
