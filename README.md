@@ -737,45 +737,6 @@ void free_memory(Node *lists[], size_t count) {
 #### Explicação:
 1. Itera sobre o array de listas e chama `free_list` para cada uma delas.
 
-# Custo Computacional
-
-O custo computacional do sistema é determinado pelas operações realizadas nas listas encadeadas e na manipulação das frequências de palavras. O custo é analisado em termos de:
-
-### Carga de Documentos
-A função `load_documents` itera por todos os documentos, processando cada um deles. O custo computacional desta função é O(n ⋅ m), onde n é o número de documentos e m é o número médio de palavras por documento.
-
-### Atualização de Frequências
-A função `update_frequency` percorre cada palavra da lista de entrada para atualizar suas frequências nos documentos. O custo aqui é O(p ⋅ q), onde p é o número de palavras na entrada e q é o número de documentos.
-
-### Cálculo do TF-IDF
-A função `calculate_tfidf` calcula a pontuação TF-IDF para cada palavra. O custo é O(p ⋅ n), onde p é o número de palavras na lista de entrada e n é o número de documentos.
-
-### Classificação de Documentos
-A função `rank_documents` possui um custo de O(n²) para classificar os documentos com base nas pontuações TF-IDF.
-
-Assim, o custo total do programa pode ser expresso como: O(n ⋅ m) + O(p ⋅ q) + O(p ⋅ n) + O(n²)
-
-## Análise Assintótica
-A análise assintótica do sistema pode ser resumida nas seguintes complexidades:
-
-- Carga de Documentos: O(n ⋅ m)
-- Atualização de Frequências: O(p ⋅ q)
-- Cálculo do TF-IDF: O(p ⋅ n)
-- Classificação de Documentos: O(n²)
-
-A complexidade geral do sistema depende da operação mais custosa, que é a classificação de documentos, resultando em uma complexidade assintótica de O(n²).
-
-## Uso de Memória
-O uso de memória é uma consideração importante, especialmente em sistemas que manipulam grandes volumes de dados. A memória utilizada pelo sistema é principalmente relacionada ao armazenamento das listas encadeadas e às variáveis auxiliares:
-
-- Listas Encadeadas
-Cada lista de palavras utiliza memória para armazenar os nós, onde cada nó armazena uma palavra, sua frequência e as frequências de documentos. O espaço utilizado por cada nó é O(1), e, portanto, a memória total para a lista de entrada pode ser O(p), onde p é o número total de palavras processadas.
-
-- Array de Documentos
-O sistema também aloca memória para os arrays que armazenam as listas de documentos e os scores TF-IDF. A memória total para documentos é O(n), onde n é o número de documentos.
-
-Portanto, o uso total de memória do sistema pode ser estimado em O(p + n), onde p representa o total de palavras únicas processadas e n o número de documentos.
-
 ## Tempo Execução
 
 Ao testar esses 6 documentos: 
