@@ -1,18 +1,75 @@
 # Sistema de Ranqueamento de Documentos com TF/IDF
 
-## Descrição do Algoritmo
+# Descrição do Algoritmo
 
 Este sistema tem como objetivo ranquear documentos de texto com base na relevância em relação a frases de pesquisa, utilizando o algoritmo TF/IDF (Term Frequency-Inverse Document Frequency). A ideia principal é medir a importância de cada termo em um conjunto de documentos, considerando tanto a frequência dos termos dentro dos documentos (TF) quanto a importância geral dos termos no conjunto de documentos (IDF). O sistema lê um conjunto de documentos, normaliza as palavras (removendo stopwords e pontuações) e calcula os scores TF/IDF para cada frase de pesquisa, resultando em um ranqueamento dos documentos.
 
-## Regras Propostas
+## Principais Componentes do Sistema
+- Leitura de Documentos: O sistema realiza a leitura e o processamento dos documentos, armazenando os termos em uma lista. O processo de normalização envolve a remoção das pontuações do documento, a remoção de stopwords do documento e a conversão dos caracteres para letras minúsculas; garantindo uma uniformidade nos dados.
 
-1. **Leitura dos Documentos**: Os documentos devem ser lidos e processados em listas encadeadas, onde cada nó contém uma palavra, sua frequência e suas frequências em diferentes documentos.
-2. **Cálculo do TF/IDF**: O cálculo deve considerar a frequência dos termos em cada documento e a frequência inversa dos termos em todo o conjunto de documentos.
-3. **Ranqueamento**: Os documentos devem ser ordenados com base nos scores TF/IDF calculados para cada frase de pesquisa.
+- Cálculo do TF/IDF: Este cálculo envolve a frequência de termos (TF) e a frequência inversa de documentos (IDF), duas métricas fundamentais para determinar a relevância dos termos em relação ao conjunto de documentos analisados.
 
-## Discussão
+- Ranqueamento de Documentos: Os documentos são ranqueados com base na soma dos valores de TF/IDF dos termos encontrados nas frases de pesquisa. Para isso, um algoritmo de ordenação é utilizado, permitindo a apresentação dos documentos de acordo com sua relevância.
 
-## Funções
+## Estruturas de Dados
+
+Optei por utilizar listas encadeadas para armazenar as palavras e suas respectivas frequências. Essa escolha foi feita por algumas razões:
+
+- **Flexibilidade**: As listas encadeadas permitem que o programa adicione ou remova palavras facilmente, adaptando-se a documentos de tamanho variável sem a necessidade de realocar grandes blocos de memória.
+- **Complexidade de Memória**: Diferente dos arrays, que têm um tamanho fixo, as listas encadeadas podem crescer e encolher conforme necessário, o que é benéfico para o gerenciamento eficiente da memória em aplicações que lidam com textos de tamanhos dinâmicos.
+- **Acesso Sequencial**: A natureza sequencial das listas encadeadas é adequada para o tipo de operação que estamos realizando, que envolve iterar sobre as palavras de um documento.
+
+### **Comparação com Alternativas**
+Embora as listas encadeadas sejam uma escolha adequada para este projeto, alternativas como arrays dinâmicos ou tabelas de hash poderiam ser consideradas.
+- **Arrays Dinâmicos**: Podem oferecer melhor desempenho em acessos aleatórios, mas têm desvantagens em relação à inserção e remoção de elementos, que podem exigir realocação e cópia de dados.
+- **Tabelas de Hash**: Poderiam melhorar a eficiência da busca, mas introduziriam complexidade adicional na implementação e no gerenciamento de colisões.
+
+A escolha de listas encadeadas equilibra eficiência, simplicidade e flexibilidade, adequando-se bem às necessidades do projeto.
+
+# Custo Computacional
+
+O custo computacional do sistema é determinado pelas operações realizadas nas listas encadeadas e na manipulação das frequências de palavras. O custo é analisado em termos de:
+
+### Carga de Documentos
+A função `load_documents` itera por todos os documentos, processando cada um deles. O custo computacional desta função é O(n ⋅ m), onde n é o número de documentos e m é o número médio de palavras por documento.
+
+### Atualização de Frequências
+A função `update_frequency` percorre cada palavra da lista de entrada para atualizar suas frequências nos documentos. O custo aqui é O(p ⋅ q), onde p é o número de palavras na entrada e q é o número de documentos.
+
+### Cálculo do TF-IDF
+A função `calculate_tfidf` calcula a pontuação TF-IDF para cada palavra. O custo é O(p ⋅ n), onde p é o número de palavras na lista de entrada e n é o número de documentos.
+
+### Classificação de Documentos
+A função `rank_documents` possui um custo de O(n²) para classificar os documentos com base nas pontuações TF-IDF.
+
+Assim, o custo total do programa pode ser expresso como: O(n ⋅ m) + O(p ⋅ q) + O(p ⋅ n) + O(n²)
+
+## Análise Assintótica
+A análise assintótica do sistema pode ser resumida nas seguintes complexidades:
+
+- Carga de Documentos: O(n ⋅ m)
+- Atualização de Frequências: O(p ⋅ q)
+- Cálculo do TF-IDF: O(p ⋅ n)
+- Classificação de Documentos: O(n²)
+
+A complexidade geral do sistema depende da operação mais custosa, que é a classificação de documentos, resultando em uma complexidade assintótica de O(n²).
+
+## Uso de Memória
+O uso de memória é uma consideração importante, especialmente em sistemas que manipulam grandes volumes de dados. A memória utilizada pelo sistema é principalmente relacionada ao armazenamento das listas encadeadas e às variáveis auxiliares:
+
+## Listas Encadeadas
+Cada lista de palavras utiliza memória para armazenar os nós, onde cada nó armazena uma palavra, sua frequência e as frequências de documentos. O espaço utilizado por cada nó é O(1), e, portanto, a memória total para a lista de entrada pode ser O(p), onde p é o número total de palavras processadas.
+
+## Array de Documentos
+O sistema também aloca memória para os arrays que armazenam as listas de documentos e os scores TF-IDF. A memória total para documentos é O(n), onde n é o número de documentos.
+
+Portanto, o uso total de memória do sistema pode ser estimado em O(p + n), onde p representa o total de palavras únicas processadas e n o número de documentos.
+
+# Conclusão
+O desempenho do sistema é amplamente dependente do número de documentos, da complexidade dos textos e do número de palavras a serem processadas. A análise do tempo de execução, custo computacional, análise assintótica e uso de memória fornece uma base sólida para entender a eficiência e a escalabilidade do programa. Para otimizações futuras, considerar a implementação de algoritmos de classificação mais eficientes ou estruturas de dados que reduzem a complexidade do tempo e do uso de memória pode ser uma abordagem viável.
+
+
+# Funções
 
 ### `Node* create_node(const char *word)`
 
@@ -35,7 +92,7 @@ Node* create_node(const char *word) {
   - `const char *word`: A palavra a ser armazenada no nó.
 - **Retorno**: Retorna um ponteiro para o novo nó criado.
 
-#### Detalhamento:
+#### Explicação:
 1. Aloca memória para um novo nó.
 2. Copia a palavra para o nó utilizando `strdup`.
 3. Inicializa a frequência como 1.
@@ -66,7 +123,7 @@ void insert(Node **head, const char *word) {
   - `Node **head`: Ponteiro para o ponteiro do cabeçalho da lista.
   - `const char *word`: A palavra a ser inserida.
 
-#### Detalhamento:
+#### Explicação:
 1. Itera pela lista encadeada para verificar se a palavra já existe.
 2. Se existir, incrementa sua frequência e sai da função.
 3. Se não existir, cria um novo nó com `create_node`.
@@ -90,7 +147,7 @@ void free_list(Node *head) {
 - **Parâmetros**:
   - `Node *head`: Ponteiro para o início da lista.
 
-#### Detalhamento:
+#### Explicação:
 1. Itera pela lista e libera a memória do nó atual.
 2. Libera a memória da palavra armazenada no nó.
 3. Continua até que todos os nós sejam liberados.
@@ -134,7 +191,7 @@ void normalize_words(const char *input, Node **list, const char **stopwords, siz
   - `const char **stopwords`: Lista de palavras a serem ignoradas.
   - `size_t stopword_count`: Número total de stopwords.
 
-#### Detalhamento:
+#### Explicação:
 1. Inicializa um buffer para armazenar palavras.
 2. Itera sobre cada caractere da linha de entrada.
 3. Adiciona caracteres alfanuméricos ao buffer, convertendo para minúsculas.
@@ -163,7 +220,7 @@ int is_stopword(const char *word, const char **stopwords, size_t stopword_count)
   - `const char **stopwords`: Lista de palavras a serem ignoradas.
   - `size_t stopword_count`: Número total de stopwords.
 
-#### Detalhamento:
+#### Explicação:
 1. Itera sobre a lista de stopwords.
 2. Compara a palavra atual com cada stopword.
 3. Retorna 1 se for uma stopword, 0 caso contrário.
@@ -200,7 +257,7 @@ size_t load_stopwords(const char *filename, const char ***stopwords) {
   - `const char *filename`: O nome do arquivo que contém as stopwords.
   - `const char ***stopwords`: Ponteiro para a lista de stopwords a ser preenchida.
 
-#### Detalhamento:
+#### Explicação:
 1. Abre o arquivo e verifica se foi aberto corretamente.
 2. Lê cada linha do arquivo e armazena as stopwords em um array dinâmico.
 3. Retorna o número total de stopwords lidas.
@@ -230,7 +287,7 @@ void process_file(const char *filename, Node **list, const char **stopwords, siz
   - `const char **stopwords`: Lista de palavras a serem ignoradas.
   - `size_t stopword_count`: Número total de stopwords.
 
-#### Detalhamento:
+#### Explicação:
 1. Abre o arquivo e verifica se foi aberto corretamente.
 2. Lê cada linha do arquivo, chamando `normalize_words` para processá-la.
 3. Fecha o arquivo após o processamento.
@@ -258,7 +315,7 @@ void load_documents(const char *files[], Node *lists[]) {
   - `const char *files[]`: Array de nomes de arquivos a serem lidos.
   - `Node *lists[]`: Array de listas onde as palavras normalizadas serão armazenadas.
 
-#### Detalhamento:
+#### Explicação:
 1. Carrega as stopwords do arquivo `stopwords.txt`.
 2. Itera sobre cada arquivo de documento, chamando `process_file` para normalizar e armazenar as palavras.
 3. Libera a memória das stopwords após o uso.
@@ -295,7 +352,7 @@ void load_input_file(const char *filename, Node ***input_lists, size_t *line_cou
   - `Node ***input_lists`: Ponteiro para as listas de entradas.
   - `size_t *line_count`: Contador de linhas processadas.
 
-#### Detalhamento:
+#### Explicação:
 1. Abre o arquivo de entrada e verifica se foi aberto corretamente.
 2. Lê cada linha do arquivo e normaliza suas palavras.
 3. Aumenta o contador de linhas a cada linha processada.
@@ -325,7 +382,7 @@ void update_frequency(Node *input_list, Node *document_list, size_t doc_index) {
   - `Node *document_list`: Lista de palavras do documento.
   - `size_t doc_index`: Índice do documento.
 
-#### Detalhamento:
+#### Explicação:
 1. Itera pela lista de entrada (input_list).
 2. Para cada palavra na lista de entrada, itera pela lista do documento.
 3. Se a palavra existir no documento, atualiza sua frequência correspondente no array `document_frequencies`.
@@ -356,7 +413,7 @@ void calculate_tfidf(Node *input_list, double tfidf_sums[]) {
   - `Node *input_list`: Lista de palavras da frase de pesquisa.
   - `double tfidf_sums[]`: Array onde os scores TF/IDF serão armazenados.
 
-#### Detalhamento:
+#### Explicação:
 1. Inicializa as variáveis TF e IDF.
 2. Itera pela lista de entrada.
 3. Para cada palavra, calcula a frequência (TF) em relação ao documento.
@@ -392,7 +449,7 @@ void rank_documents(double tfidf_sums[], size_t ranking[]) {
   - `double tfidf_sums[]`: Array de scores TF/IDF dos documentos.
   - `size_t ranking[]`: Array para armazenar a classificação dos documentos.
 
-#### Detalhamento:
+#### Explicação:
 1. Inicializa um array `indices` para armazenar os índices dos documentos.
 2. Realiza a ordenação utilizando um algoritmo de ordenação (ex: Bubble Sort).
 3. Armazena a classificação resultante no array `ranking`.
@@ -412,7 +469,7 @@ void free_memory(Node *lists[], size_t count) {
   - `Node *lists[]`: Array de listas a serem liberadas.
   - `size_t count`: Contador de listas.
 
-#### Detalhamento:
+#### Explicação:
 1. Itera sobre o array de listas e chama `free_list` para cada uma delas.
 
 
