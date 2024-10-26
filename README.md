@@ -768,10 +768,10 @@ A complexidade geral do sistema depende da operação mais custosa, que é a cla
 ## Uso de Memória
 O uso de memória é uma consideração importante, especialmente em sistemas que manipulam grandes volumes de dados. A memória utilizada pelo sistema é principalmente relacionada ao armazenamento das listas encadeadas e às variáveis auxiliares:
 
-## Listas Encadeadas
+- Listas Encadeadas
 Cada lista de palavras utiliza memória para armazenar os nós, onde cada nó armazena uma palavra, sua frequência e as frequências de documentos. O espaço utilizado por cada nó é O(1), e, portanto, a memória total para a lista de entrada pode ser O(p), onde p é o número total de palavras processadas.
 
-## Array de Documentos
+- Array de Documentos
 O sistema também aloca memória para os arrays que armazenam as listas de documentos e os scores TF-IDF. A memória total para documentos é O(n), onde n é o número de documentos.
 
 Portanto, o uso total de memória do sistema pode ser estimado em O(p + n), onde p representa o total de palavras únicas processadas e n o número de documentos.
