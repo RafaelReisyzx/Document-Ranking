@@ -45,30 +45,30 @@ A escolha de listas encadeadas equilibra eficiência, simplicidade e flexibilida
 ```
 
 ### 3. Carregamento de Documentos
-- O programa chama a função <a href="load_documents">load_documents</a>, responsável por carregar e processar os documentos de texto. Essa função:
+- O programa chama a função load_documents, responsável por carregar e processar os documentos de texto. Essa função:
 - Lê os termos de cada arquivo e normaliza-os.
 - Insere os termos em uma lista encadeada para cada documento, ignorando os termos que estão na lista de stopwords (termos comuns que não agregam significado, como "e", "o", etc.).
 - A estrutura de cada nó na lista contém o termo, sua frequência e a contagem de documentos em que aparece.
 - 
 ### 4. Carregamento de Arquivo de Entrada
-- Outra função, [load_input_file](load_input_file), é chamada para ler um arquivo de entrada, que contém frases de pesquisa separadas por linha.
+- Outra função, load_input_file, é chamada para ler um arquivo de entrada, que contém frases de pesquisa separadas por linha.
 - Cada linha é processada da mesma forma que os documentos, resultando em uma lista de termos para cada linha a serem analisadas.
 - 
 ### 5. Cálculo de Frequências e TF-IDF
 - Para cada linha do arquivo de entrada, são realizadas as seguintes operações:
 - Inicializa um vetor tfidf_scores para armazenar os scores TF-IDF para cada documento.
-- Para cada documento, a função [update_frequency](update_frequency) é chamada para atualizar a frequência dos termos da linha atual na lista de termos do documento.
-- A função [calculate_tfidf](calculate_tfidf) é chamada para calcular os scores TF-IDF:
+- Para cada documento, a função update_frequency é chamada para atualizar a frequência dos termos da linha atual na lista de termos do documento.
+- A função calculate_tfidf é chamada para calcular os scores TF-IDF:
 - O Term Frequency (TF) é calculado como a frequência da palavra na lista de entrada em relação à frequência total no documento.
 - O Inverse Document Frequency (IDF) é calculado com base na contagem de documentos em que a palavra aparece.
 - O score TF-IDF é armazenado no vetor tfidf_scores.
 - 
 ### 6. Classificação dos Documentos
-- Após o cálculo dos scores TF-IDF, a função [rank_documents](rank_documents) é chamada para classificar os documentos de acordo com seus scores.
+- Após o cálculo dos scores TF-IDF, a função rank_documents é chamada para classificar os documentos de acordo com seus scores.
 -A classificação é armazenada em um vetor ranking, que é impresso para cada linha do arquivo de entrada, mostrando a ordem dos documentos com base na relevância para a linha de pesquisa.
 
 ### 7. Liberação de Memória
-- Após a execução do processamento, a função [free_memory ](free_memory )é chamada para liberar a memória alocada para as listas de documentos.
+- Após a execução do processamento, a função free_memory é chamada para liberar a memória alocada para as listas de documentos.
 - O programa também libera a memória alocada para as linhas de entrada.
 - 
 ### 8. Cálculo do Tempo de Execução
