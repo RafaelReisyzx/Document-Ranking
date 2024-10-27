@@ -736,10 +736,13 @@ void free_memory(Node *lists[], size_t count) {
 
 ## Tempo Execução
 
-Ao realizar o teste com seis documentos ("dataset/A mão e a luva.txt", "dataset/biblia.txt", "dataset/DomCasmurro.txt", "dataset/quincas borba.txt", "dataset/Semana_Machado_Assis.txt" e "dataset/terremoto.txt") utilizando um conjunto de 50 frases de pesquisa aleatórias, o sistema apresentou um tempo de execução total de 67,63 segundos. Esse tempo de processamento indica uma relação direta entre o desempenho do sistema e fatores como o volume e complexidade dos documentos e a quantidade de termos pesquisados.
-Primeiramente, o número de documentos processados impacta significativamente o desempenho, uma vez que o sistema deve realizar leituras e buscas em cada arquivo individualmente. Além disso, a complexidade dos textos, que pode envolver tanto o tamanho dos documentos quanto a estrutura e a densidade lexical, também exerce influência: textos maiores e mais complexos exigem maior poder computacional para processamento de frases e termos.
-Por fim, o número de frases de pesquisa também é um fator determinante, já que cada frase adiciona uma camada de busca e comparação dentro de cada documento. Quanto maior o número de frases, maior o esforço do sistema para analisar correspondências e calcular relevâncias, o que resulta em maior tempo de execução.
-Assim, observamos que a escalabilidade do sistema pode ser afetada pela combinação desses fatores. Para otimizar o desempenho, estratégias como o uso de algoritmos mais eficientes, processamento paralelo, ou redução do número de termos poderiam ser exploradas, buscando uma melhor adaptação às demandas de desempenho sem comprometer a precisão dos resultados obtidos.
+Ao realizar o teste com seis documentos ("dataset/A mão e a luva.txt", "dataset/biblia.txt", "dataset/DomCasmurro.txt", "dataset/quincas borba.txt", "dataset/Semana_Machado_Assis.txt" e "dataset/terremoto.txt") utilizando um conjunto de 50 frases de pesquisa aleatórias, o sistema apresentou um tempo de execução total de 67,63 segundos.<br/>
+
+Primeiramente, o número de documentos processados impacta significativamente o desempenho, uma vez que o sistema deve realizar leituras e buscas em cada arquivo individualmente. Além disso, a complexidade dos textos, que pode envolver tanto o tamanho dos documentos quanto a estrutura e a densidade lexical, também exerce influência: textos maiores e mais complexos exigem maior poder computacional para processamento de frases e termos.<br/>
+
+Por fim, o número de frases de pesquisa também é um fator determinante, já que cada frase adiciona uma camada de busca e comparação dentro de cada documento. Quanto maior o número de frases, maior o esforço do sistema para analisar correspondências e calcular relevâncias, o que resulta em maior tempo de execução.<br/>
+
+Assim, observamos que a escalabilidade do sistema pode ser afetada pela combinação desses fatores. Para otimizar o desempenho, estratégias como o uso de algoritmos mais eficientes, processamento paralelo, ou redução do número de termos poderiam ser exploradas, buscando uma melhor adaptação às demandas de desempenho sem comprometer a precisão dos resultados obtidos.<br/>
 
 # Compilação e Execução
 
