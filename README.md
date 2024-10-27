@@ -45,7 +45,7 @@ A escolha de listas encadeadas equilibra eficiência, simplicidade e flexibilida
 ```
 
 ### 3. Carregamento de Documentos
-- O programa chama a função [load_documents](load_documents), responsável por carregar e processar os documentos de texto. Essa função:
+- O programa chama a função <a href="load_documents">load_documents</a>, responsável por carregar e processar os documentos de texto. Essa função:
 - Lê os termos de cada arquivo e normaliza-os.
 - Insere os termos em uma lista encadeada para cada documento, ignorando os termos que estão na lista de stopwords (termos comuns que não agregam significado, como "e", "o", etc.).
 - A estrutura de cada nó na lista contém o termo, sua frequência e a contagem de documentos em que aparece.
